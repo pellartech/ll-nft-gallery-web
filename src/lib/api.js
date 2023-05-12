@@ -1,0 +1,60 @@
+
+import axios from 'axios'
+const _instance = axios.create()
+_instance.defaults.baseURL = 'http://localhost:3000'
+_instance.defaults.headers.post['Content-Type'] = 'application/json'
+_instance.defaults.headers.post['Accept'] = 'application/json'
+
+// { page_index, page_size, sort_by, order_by, terms, contract_address }
+export async function searchNfts(filter) {
+    let path = '/api/v1/nfts'
+    const params = []
+    for (const [key, value] of Object.entries(filter)) {
+        params.push(`${key}=${value}`)
+    }
+    path = path + '?' + params.join('&')
+
+    const resp = await _instance.get(path)
+    return resp.data
+}
+
+// { page_index, page_size, sort_by, order_by, terms, contract_address,include_all,limit }
+export async function searchCollections(filter) {
+    let path = '/api/v1/collections'
+    const params = []
+    for (const [key, value] of Object.entries(filter)) {
+        params.push(`${key}=${value}`)
+    }
+    path = path + '?' + params.join('&')
+
+    const resp = await _instance.get(path)
+    return resp.data
+}
+
+export async function geCollection(address) {
+    let path = `/api/v1/collections/${address}`
+    const resp = await _instance.get(path)
+    return resp.data
+}
+
+export async function geNft(address, tokenId) {
+    let path = `/api/v1/collections/${address}/nfts/${tokenId}`
+    const resp = await _instance.get(path)
+    return resp.data
+}
+
+export async function fetchNftsByCollection(address) {
+    let path = `/api/v1/collections`
+    const payload = {
+        address
+    }
+    const resp = await _instance.post(path, payload)
+    return resp.data
+}
+
+export async function refreshNftMetaData(address, tokenId) {
+    let path = `/api/v1/collections/${address}/nfts/${tokenId}`
+    const resp = await _instance.put(path)
+    return resp.data
+}
+
