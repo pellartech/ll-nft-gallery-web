@@ -48,8 +48,13 @@ export async function fetchNftsByCollection(address) {
     const payload = {
         address
     }
-    const resp = await _instance.post(path, payload)
-    return resp.data
+    try {
+        const resp = await _instance.post(path, payload)
+        return resp.data
+    }
+    catch {
+        throw new Error('Failed to fetch nfts');
+    }
 }
 
 export async function refreshNftMetaData(address, tokenId) {

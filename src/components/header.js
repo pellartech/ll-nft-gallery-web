@@ -6,6 +6,7 @@ export default function Header() {
             <nav className="bg-slate-600 p-4 strick top-0 flex space-x-4">
                 <Link href="/" className="text-white/90 no-underline hover:text-white">Home</Link>
                 <Link href="/collections" className="text-white/90 no-underline hover:text-white">Collections</Link>
+                <Link href="/fetch-nfts" className="text-white/90 no-underline hover:text-white">Fetch Nfts</Link>
             </nav>
         </header>
     )
