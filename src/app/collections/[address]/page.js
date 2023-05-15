@@ -5,6 +5,7 @@ export default async function Page({ params }) {
   const address = params.address
 
   const nftsData = await searchNfts({ page_index: 1, page_size: 20, sort_by: 'desc', order_by: 'created', contract_address: address })
+
   return (
     <div>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

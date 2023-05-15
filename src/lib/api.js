@@ -39,8 +39,13 @@ export async function geCollection(address) {
 
 export async function getNft(address, tokenId) {
     let path = `/api/v1/collections/${address}/nfts/${tokenId}`
-    const resp = await _instance.get(path)
-    return resp.data
+    try {
+        const resp = await _instance.get(path)
+        return resp.data
+    }
+    catch {
+        throw new Error('Failed to fetch data');
+    }
 }
 
 export async function fetchNftsByCollection(address) {
