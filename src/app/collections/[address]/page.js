@@ -1,8 +1,5 @@
-'use client'
-
 import { NFTCard } from "@/components/nft-card"
 import { searchNfts } from "@/lib/api"
-import ErrorPage from 'next/error'
 
 export default async function Page({ params }) {
   const address = params.address
@@ -17,9 +14,9 @@ export default async function Page({ params }) {
       </div>
       <div className='flex flex-wrap gap-y-12 mt-4 w-5/6 gap-x-2 justify-center'>
         {
-          nftsData.items.map(nft => {
+          nftsData.items.map(item => {
             return (
-              <NFTCard nft={nft} key={nft.key}></NFTCard>
+              <NFTCard item={item} key={item.key}></NFTCard>
             )
           })
         }

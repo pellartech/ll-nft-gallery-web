@@ -37,7 +37,7 @@ export async function geCollection(address) {
     return resp.data
 }
 
-export async function geNft(address, tokenId) {
+export async function getNft(address, tokenId) {
     let path = `/api/v1/collections/${address}/nfts/${tokenId}`
     const resp = await _instance.get(path)
     return resp.data

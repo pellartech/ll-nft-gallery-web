@@ -20,7 +20,8 @@ export default async function Page() {
                             <CollectionCard item={item} key={item.key}></CollectionCard>
 
                         )
-                    })}
+                    })
+                }
             </ul>
 
 
