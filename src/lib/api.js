@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 const _instance = axios.create()
-_instance.defaults.baseURL = 'http://localhost:3000'
+_instance.defaults.baseURL = process.env.REACT_APP_API_URL_ROOT || 'http://localhost:3000'
 _instance.defaults.headers.post['Content-Type'] = 'application/json'
 _instance.defaults.headers.post['Accept'] = 'application/json'
 
