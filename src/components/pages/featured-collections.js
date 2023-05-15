@@ -12,7 +12,7 @@ export default async function FeaturedCollections() {
             </div>
             <ul role="list" className="divide-y divide-gray-100">
                 {collectionsData.items.map((item) => (
-                    <Link as={`/collections/${item.contract_address}`} href="/collections/[address]">
+                    <Link key={item.key} as={`/collections/${item.contract_address}`} href="/collections/[address]">
                         <li key={item.key} className="flex justify-between gap-x-6 py-5">
                             <div className="flex gap-x-4">
                                 <div className="min-w-0 flex-auto">

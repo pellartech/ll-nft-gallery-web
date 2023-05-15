@@ -14,7 +14,7 @@ export default async function RecentNfts() {
                 {
                     nftsData.items.map(nft => {
                         return (
-                            <NFTCard nft={nft}></NFTCard>
+                            <NFTCard nft={nft} key={nft.key}></NFTCard>
                         )
                     })
                 }
