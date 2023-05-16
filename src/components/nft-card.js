@@ -3,11 +3,11 @@ import Link from 'next/link'
 export const NFTCard = ({ item }) => {
 
     return (
-        <Link key={item.key} as={`/collections/${item.contract_address}/tokens/${item.token_id}`}
-            href="/collections/[address]/tokens/[id]">
-            <div key={item.key} className="w-1/4 flex flex-col ">
+        <div key={item.key} className="w-1/4 flex flex-col ">
+            <Link key={item.key} as={`/collections/${item.contract_address}/tokens/${item.token_id}`}
+                href="/collections/[address]/tokens/[id]">
                 <div className="rounded-md">
-                    <img className="object-cover h-128 w-full rounded-t-md" src={item.original_image_uri} ></img>
+                    <img className="object-cover h-128 w-full rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${item.image&&item.image.normal}`} ></img>
                 </div>
                 <div className="flex flex-col y-gap-2 px-2 py-3 bg-slate-100 rounded-b-md h-110 ">
                     <div className="">
@@ -20,8 +20,8 @@ export const NFTCard = ({ item }) => {
                         <p className="text-gray-600">{item.description}</p>
                     </div>
                 </div>
+            </Link>
+        </div >
 
-            </div>
-        </Link>
     )
 }

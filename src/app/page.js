@@ -4,8 +4,8 @@ import { NFTCard } from "@/components/nft-card"
 import { searchCollections, searchNfts } from "@/lib/api"
 
 export default async function Page() {
-    const collectionsData = await searchCollections({ page_index: 1, page_size: 10, sort_by: 'desc', order_by: 'total_supply' })
-    const nftsData = await searchNfts({ page_index: 1, page_size: 9, sort_by: 'desc', order_by: 'created' })
+    const collectionsData = await searchCollections({ page_index: 1, page_size: 10, sort_by: 'total_supply', order_by: 'desc' })
+    const nftsData = await searchNfts({ page_index: 1, page_size: 9, sort_by: 'created', order_by: 'desc' })
     return (
         <>
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">

@@ -7,7 +7,7 @@ export default async function Page({ params }) {
   const nftsData = await searchNfts({ page_index: 1, page_size: 20, sort_by: 'desc', order_by: 'created', contract_address: address })
 
   return (
-    <div>
+    <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           NFTs
@@ -22,7 +22,7 @@ export default async function Page({ params }) {
           })
         }
       </div>
-    </div>
+    </>
   )
 }
 

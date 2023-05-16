@@ -1,12 +1,12 @@
 // import { NFTCard } from "@/components/nft-card"
-// import { getNft } from "@/lib/api"
+// import { getNftDetail } from "@/lib/api"
 // import { Suspense } from 'react'
 
 // export default async function Page({ params }) {
 //     const address = params.address
 //     const id = params.id
 
-//     const nft = await getNft(address, id)
+//     const nft = await getNftDetail(address, id)
 //     return (
 //         <div>
 //             <div className="sm:mx-auto sm:w-full sm:max-w-sm">

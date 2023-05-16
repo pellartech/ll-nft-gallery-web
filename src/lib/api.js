@@ -1,7 +1,7 @@
-
 import axios from 'axios'
 const _instance = axios.create()
-_instance.defaults.baseURL = process.env.REACT_APP_API_URL_ROOT || 'http://llnft-federation-stage14.ap-southeast-1.elasticbeanstalk.com'
+_instance.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL_ROOT || 'http://llnft-federation-stage14.ap-southeast-1.elasticbeanstalk.com'
+// _instance.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL_ROOT
 _instance.defaults.headers.post['Content-Type'] = 'application/json'
 _instance.defaults.headers.post['Accept'] = 'application/json'
 
@@ -37,13 +37,14 @@ export async function geCollection(address) {
     return resp.data
 }
 
-export async function getNft(address, tokenId) {
+export async function getNftDetail(address, tokenId) {
     let path = `/api/v1/collections/${address}/nfts/${tokenId}`
     try {
         const resp = await _instance.get(path)
         return resp.data
     }
-    catch {
+    catch (error) {
+        console.log(error)
         throw new Error('Failed to fetch data');
     }
 }
@@ -57,7 +58,8 @@ export async function fetchNftsByCollection(address) {
         const resp = await _instance.post(path, payload)
         return resp.data
     }
-    catch {
+    catch (error) {
+        console.log(error.message)
         throw new Error('Failed to fetch nfts');
     }
 }

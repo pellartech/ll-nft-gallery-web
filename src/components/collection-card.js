@@ -2,8 +2,8 @@ import Link from 'next/link'
 
 export const CollectionCard = ({ item }) => {
     return (
-        <Link key={item.key} as={`/collections/${item.contract_address}`} href="/collections/[address]">
-            <li key={item.key} className="flex justify-between gap-x-6 py-5">
+        <li key={item.key} className="flex justify-between gap-x-6 py-5">
+            <Link key={item.key} as={`/collections/${item.contract_address}`} href="/collections/[address]">
                 <div className="flex gap-x-4">
                     <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-gray-900">{item.name}</p>
@@ -16,7 +16,7 @@ export const CollectionCard = ({ item }) => {
                         <time dateTime={item.created}>{item.created}</time>
                     </p>
                 </div>
-            </li>
-        </Link>
+            </Link>
+        </li>
     )
 }
