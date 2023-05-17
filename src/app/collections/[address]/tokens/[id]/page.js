@@ -1,3 +1,4 @@
+'use client'
 import { NFTCard } from "@/components/nft-card"
 import { getNftDetail } from "@/lib/api"
 import { Suspense } from 'react'
