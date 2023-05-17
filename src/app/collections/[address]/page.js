@@ -1,28 +1,47 @@
+'use client'
 import { NFTCard } from "@/components/nft-card"
-import { searchNfts } from "@/lib/api"
+import { getCollection, searchNfts } from "@/lib/api"
+import { Card, Metric, Text, Title, Subtitle, Bold, Italic } from '@tremor/react'
+import Search from "@/components/search"
 
-export default async function Page({ params }) {
+// export const dynamic = 'force-dynamic'
+
+export default async function Page({ params, searchParams }) {
+  const search = searchParams.q ?? ''
   const address = params.address
 
-  const nftsData = await searchNfts({ page_index: 1, page_size: 20, sort_by: 'desc', order_by: 'created', contract_address: address })
+  const collection = await getCollection(address)
+
+  const nftsData = await searchNfts({ page_index: 1, page_size: 20, sort_by: 'desc', order_by: 'created', contract_address: address, terms: search })
 
   return (
-    <>
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          NFTs
-        </h2>
-      </div>
-      <div className='flex flex-wrap gap-y-12 mt-4 w-5/6 gap-x-2 justify-center'>
-        {
-          nftsData.items.map(item => {
-            return (
-              <NFTCard item={item} key={item.key}></NFTCard>
-            )
-          })
-        }
-      </div>
-    </>
+    <main className="p-4 md:p-10 mx-auto max-w-7xl">
+      <Title>Collection</Title>
+      <Card className="mt-6">
+        <Metric>Name:{collection.name}</Metric>
+
+        <Title>Symbol:{collection.symbol}</Title>
+
+        <Text>Contract:{collection.contract_address}</Text>
+
+        <Text>Total Supply:{collection.total_supply}</Text>
+
+        {/* <Text>Fetched: {collection.number_of_fetched}</Text> */}
+      </Card>
+      <Title className="relative mt-5 max-w-md">NFTs</Title>
+      <Search type='nft' />
+      <Card className="mt-6">
+        <div className='flex flex-wrap gap-y-12 mt-4 w-5/6 gap-x-2 justify-center'>
+          {
+            nftsData.items.map(item => {
+              return (
+                <NFTCard item={item} key={item.key}></NFTCard>
+              )
+            })
+          }
+        </div>
+      </Card>
+    </main>
   )
 }
 

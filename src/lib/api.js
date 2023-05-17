@@ -31,7 +31,7 @@ export async function searchCollections(filter) {
     return resp.data
 }
 
-export async function geCollection(address) {
+export async function getCollection(address) {
     let path = `/api/v1/collections/${address}`
     const resp = await _instance.get(path)
     return resp.data

@@ -1,23 +1,21 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
-import Header from '@/components/header'
+import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Suspense } from 'react';
 
 export const metadata = {
   title: 'LightLink NFT Gallery',
   description: 'LightLink NFT Gallery',
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <html lang="en" className="h-full bg-gray-50">
+      <body className="h-full">
+        <Navbar />
+        <Suspense fallback="...">
           {children}
-        </main>
+        </Suspense>
         <Footer />
       </body>
     </html>

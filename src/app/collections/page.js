@@ -1,25 +1,25 @@
-import { CollectionCard } from "@/components/collection-card"
+'use client'
+
+import CollectionsTable from "@/components/collections-table"
+import { NFTCard } from "@/components/nft-card"
+import Search from "@/components/search"
 import { searchCollections } from "@/lib/api"
 
-export default async function Page() {
-  const collectionsData = await searchCollections({ page_index: 1, page_size: 30, sort_by: 'modified', order_by: 'total_supply' })
+import { Card, Title, Text } from '@tremor/react'
+
+export const dynamic = 'force-dynamic'
+
+export default async function Page({ searchParams }) {
+  const search = searchParams.q ?? ''
+  const collectionsData = await searchCollections({ terms: search, page_index: 1, page_size: 30, sort_by: 'total_supply', order_by: 'desc' })
 
   return (
-    <div>
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Collections
-        </h2>
-      </div>
-      <ul role="list" className="divide-y divide-gray-100">
-        {
-          collectionsData.items.map((item) => {
-            return (
-              <CollectionCard item={item} key={item.key}></CollectionCard>
-            )
-          })
-        }
-      </ul>
-    </div>
+    <main className="p-4 md:p-10 mx-auto max-w-7xl">
+      <Title>List of Collections</Title>
+      <Search type='collection'/>
+      <Card className="mt-6">
+        <CollectionsTable items={collectionsData.items} />
+      </Card>
+    </main>
   )
 }
