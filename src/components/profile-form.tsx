@@ -22,7 +22,7 @@ export default function ProfileForm({ user }: { user?: IUser }) {
         resolver: yupResolver(schema),
     })
 
-    function onSubmit(data) {
+    function onSubmit(data: any) {
         console.log(data)
     }
 
