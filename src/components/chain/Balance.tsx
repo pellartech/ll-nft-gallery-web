@@ -24,6 +24,7 @@ export function AccountBalance() {
     address,
     watch: true,
   })
+  
 
   return (
     <div>
