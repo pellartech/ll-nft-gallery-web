@@ -10,7 +10,7 @@ import {
 
 import { chains, config } from '@/lib/wagmi'
 import { useEffect, useState } from "react"
-import { getAuthNonce, signin, setToken } from '@/lib/api'
+import { getAuthNonce, signin, logout } from '@/lib/api'
 import { SiweMessage } from 'siwe'
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -37,9 +37,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         },
         verify: async ({ message, signature }) => {
             const data = await signin(message, signature)
-            // console.log(data)
             if (data.token) {
-                setToken(data.token)
                 window.localStorage.setItem('lightlink-web-token', data.token)
                 setAuthenticationStatus("authenticated")
                 return true
@@ -49,7 +47,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
         },
         signOut: async () => {
-            setToken('');
             window.localStorage.removeItem('lightlink-web-token')
         },
     })
@@ -62,7 +59,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
             } else {
                 setAuthenticationStatus("unauthenticated")
             }
-
         }
         fetchAuthStatus()
     }, [])

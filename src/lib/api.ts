@@ -1,22 +1,11 @@
 import axios from 'axios'
 import { SiweMessage } from 'siwe'
+import { getCookie } from 'cookies-next'
 const _instance = axios.create()
-_instance.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL_ROOT || 'http://llnft-federation-stage14.ap-southeast-1.elasticbeanstalk.com'
+_instance.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL_ROOT || 'https://gallery-federation.lightlinksys.com'
 // _instance.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL_ROOT
 _instance.defaults.headers.post['Content-Type'] = 'application/json'
 _instance.defaults.headers.post['Accept'] = 'application/json'
-
-let token: string = ''
-
-_instance.interceptors.request.use(config => {
-    // const token = window.localStorage.getItem('ll-nft-web-token')
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-}, err => {
-    return Promise.reject(err);
-})
 
 // { page_index, page_size, sort_by, order_by, terms, contract_address }
 export async function searchNfts(filter: any) {
@@ -108,14 +97,26 @@ export async function logout() {
     return resp.data
 }
 
-export async function getProfile() {
+export async function getProfile(token: any) {
     let path = `/api/v1/auth/profile`
-    const resp = await _instance.get(path)
+    const resp = await _instance.get(path, {
+        headers: {
+            Authorization: `Bearer ${encodeURIComponent(token)}`,
+        }
+    })
     return resp.data
 }
 
-export function setToken(_token: string) {
-    token = _token
+export async function updateProfile(token: any, name?: string, bio?: string, twitter?: string, instagram?: string, discord?: string) {
+    let path = `/api/v1/auth/profile`
+    const resp = await _instance.put(path, {
+        name, bio, twitter, instagram, discord
+    }, {
+        headers: {
+            Authorization: `Bearer ${encodeURIComponent(token)}`,
+        }
+    })
+    return resp.data
 }
 
 

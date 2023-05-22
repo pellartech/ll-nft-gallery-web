@@ -3,27 +3,48 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import storage from '../utils/storage'
+import { updateProfile } from '@/lib/api'
+import useSWR, { mutate } from "swr"
 
-type IUser = {
-    name: string,
-    bio: string,
-    twitter: string,
-    instagram: string
+type FormData = {
+    name?: string,
+    bio?: string,
+    twitter?: string,
+    instagram?: string,
+    discord?: string
 }
 
-export default function ProfileForm({ user }: { user?: IUser }) {
+export default function ProfileForm({ user }: { user?: FormData }) {
+
+    // const { token } = useSWR("lightlink-web-token", storage)
+    const token = window.localStorage.getItem("lightlink-web-token")
 
     const schema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
-        bio: Yup.string().required('Name is required'),
+        bio: Yup.string().required('Bio is required'),
+        twitter: Yup.string().required('Twitter is required'),
+        instagram: Yup.string().required('Instagram is required'),
+        discord: Yup.string().required('Discord is required')
     })
 
-    const { register, handleSubmit } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
+        defaultValues: {
+            name: user?.name!,
+            bio: user?.bio!,
+            twitter: user?.twitter!,
+            instagram: user?.instagram!,
+            discord: user?.discord!,
+        }
     })
 
-    function onSubmit(data: any) {
+    const onSubmit = async (data: FormData) => {
         console.log(data)
+        const result = await updateProfile(token, data.name, data.bio, data.twitter, data.instagram, data.discord)
+        if (result) {
+            console.log("fetched:", result.data)
+        }
     }
 
     return (
@@ -46,11 +67,13 @@ export default function ProfileForm({ user }: { user?: IUser }) {
                                         type="text"
                                         id="name"
                                         autoComplete="name"
-                                        {...register('username')}
+                                        {...register('name')}
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         placeholder="janesmith"
                                     />
+
                                 </div>
+                                <p>{errors.name?.message}</p>
                             </div>
                         </div>
                     </div>
@@ -67,12 +90,13 @@ export default function ProfileForm({ user }: { user?: IUser }) {
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 defaultValue={''}
                             />
+                            <p>{errors.bio?.message}</p>
                         </div>
                         <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
                     </div>
 
                     <div className="sm:col-span-4">
-                        <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label htmlFor="twitter" className="block text-sm font-medium leading-6 text-gray-900">
                             Twitter
                         </label>
                         <div className="mt-2">
@@ -81,10 +105,11 @@ export default function ProfileForm({ user }: { user?: IUser }) {
                                 {...register('twitter')}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                            <p>{errors.twitter?.message}</p>
                         </div>
                     </div>
                     <div className="sm:col-span-4">
-                        <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label htmlFor="instagram" className="block text-sm font-medium leading-6 text-gray-900">
                             Instagram
                         </label>
                         <div className="mt-2">
@@ -93,6 +118,20 @@ export default function ProfileForm({ user }: { user?: IUser }) {
                                 {...register('instagram')}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                            <p>{errors.instagram?.message}</p>
+                        </div>
+                    </div>
+                    <div className="sm:col-span-4">
+                        <label htmlFor="discord" className="block text-sm font-medium leading-6 text-gray-900">
+                            Discord
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="discord"
+                                {...register('discord')}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                            <p>{errors.discord?.message}</p>
                         </div>
                     </div>
                 </div>
