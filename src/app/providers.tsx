@@ -10,7 +10,7 @@ import {
 
 import { chains, config } from '@/lib/wagmi'
 import { useEffect, useState } from "react"
-import { generateWalletNonce, getAuthStatus, signin, signOut } from '@/lib/api'
+import { getAuthNonce, signin, setToken } from '@/lib/api'
 import { SiweMessage } from 'siwe'
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -18,7 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
     const authenticationAdapter = createAuthenticationAdapter({
         getNonce: async () => {
-            const data = await generateWalletNonce();
+            const data = await getAuthNonce();
             return data.nonce
         },
         createMessage: ({ nonce, address, chainId }) => {
@@ -37,25 +37,32 @@ export function Providers({ children }: { children: React.ReactNode }) {
         },
         verify: async ({ message, signature }) => {
             const data = await signin(message, signature)
-            setAuthenticationStatus(
-                data.success ? "authenticated" : "unauthenticated"
-            )
-            return Boolean(data.success)
+            // console.log(data)
+            if (data.token) {
+                setToken(data.token)
+                window.localStorage.setItem('lightlink-web-token', data.token)
+                setAuthenticationStatus("authenticated")
+                return true
+            }
+            setAuthenticationStatus("unauthenticated")
+            return false
+
         },
         signOut: async () => {
-            await signOut();
+            setToken('');
+            window.localStorage.removeItem('lightlink-web-token')
         },
     })
 
     useEffect(() => {
         const fetchAuthStatus = async () => {
-            // const data = await getAuthStatus()
-            // if (!data) {
-            //     setAuthenticationStatus("unauthenticated");
-            // } else {
-            //     setAuthenticationStatus("authenticated");
-            // }
-            setAuthenticationStatus("unauthenticated")
+            const token = window.localStorage.getItem('lightlink-web-token')
+            if (token) {
+                setAuthenticationStatus("authenticated")
+            } else {
+                setAuthenticationStatus("unauthenticated")
+            }
+
         }
         fetchAuthStatus()
     }, [])

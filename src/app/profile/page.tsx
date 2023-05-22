@@ -1,21 +1,31 @@
+'use client'
 import { Account } from '@/components/chain/Account'
-import { Balance } from '@/components/chain/Balance'
-import { ConnectButton } from '@/components/chain/ConnectButton'
 import { Connected } from '@/components/chain/Connected'
-import { Card, Title, Text } from '@tremor/react'
+import { useAccount } from 'wagmi'
+import { getProfile } from '@/lib/api'
+import  ProfileForm from '@/components/profile-form'
 
 // export const dynamic = 'force-dynamic'
 
 export default function Page() {
+    const { isConnected } = useAccount()
+
+    if (!isConnected) {
+        return (
+            <main className="p-4 md:p-10 mx-auto max-w-7xl">
+                <div>You must be signed in to view the protected content on this page.
+                </div>
+            </main>
+        )
+    }
+    // const user = await getProfile()
+
     return (
         <main className="p-4 md:p-10 mx-auto max-w-7xl">
             <Connected>
                 <h2>Account</h2>
                 <Account />
-                <br />
-                <hr />
-                <h2>Balance</h2>
-                <Balance />
+                <ProfileForm />
             </Connected>
         </main>
     )

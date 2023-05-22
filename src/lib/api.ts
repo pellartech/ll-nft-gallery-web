@@ -6,6 +6,18 @@ _instance.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL_ROOT || 'http://lln
 _instance.defaults.headers.post['Content-Type'] = 'application/json'
 _instance.defaults.headers.post['Accept'] = 'application/json'
 
+let token: string = ''
+
+_instance.interceptors.request.use(config => {
+    // const token = window.localStorage.getItem('ll-nft-web-token')
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, err => {
+    return Promise.reject(err);
+})
+
 // { page_index, page_size, sort_by, order_by, terms, contract_address }
 export async function searchNfts(filter: any) {
     let path = '/api/v1/nfts'
@@ -71,16 +83,16 @@ export async function refreshNftMetaData(address: string, tokenId: string) {
     return resp.data
 }
 
-export async function generateWalletNonce() {
+export async function getAuthNonce() {
     let path = `/api/v1/auth/nonce`
     const payload = {
     }
-    const resp = await _instance.post(path, payload)
+    const resp = await _instance.get(path, payload)
     return resp.data
 }
 
 export async function signin(message: SiweMessage, signature: string) {
-    let path = `/api/v1/auth/eth/login`
+    let path = `/api/v1/auth/signin`
     const payload = {
         // address,
         message,
@@ -90,16 +102,20 @@ export async function signin(message: SiweMessage, signature: string) {
     return resp.data
 }
 
-export async function signOut() {
+export async function logout() {
     let path = `/api/v1/auth/logout`
     const resp = await _instance.post(path)
     return resp.data
 }
 
-export async function getAuthStatus() {
-    let path = `/api/v1/auth/me`
+export async function getProfile() {
+    let path = `/api/v1/auth/profile`
     const resp = await _instance.get(path)
     return resp.data
+}
+
+export function setToken(_token: string) {
+    token = _token
 }
 
 
