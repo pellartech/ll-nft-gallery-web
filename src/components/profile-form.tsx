@@ -1,11 +1,9 @@
 'use client'
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import storage from '../utils/storage'
 import { updateProfile } from '@/lib/api'
-import useSWR, { mutate } from "swr"
 
 type FormData = {
     name?: string,
@@ -16,7 +14,6 @@ type FormData = {
 }
 
 export default function ProfileForm({ user }: { user?: FormData }) {
-
     // const { token } = useSWR("lightlink-web-token", storage)
     const token = window.localStorage.getItem("lightlink-web-token")
 
@@ -28,22 +25,15 @@ export default function ProfileForm({ user }: { user?: FormData }) {
         discord: Yup.string().required('Discord is required')
     })
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema),
-        defaultValues: {
-            name: user?.name!,
-            bio: user?.bio!,
-            twitter: user?.twitter!,
-            instagram: user?.instagram!,
-            discord: user?.discord!,
-        }
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
     })
 
     const onSubmit = async (data: FormData) => {
         console.log(data)
         const result = await updateProfile(token, data.name, data.bio, data.twitter, data.instagram, data.discord)
         if (result) {
-            console.log("fetched:", result.data)
+            console.log("updated:", result.data)
         }
     }
 
@@ -65,15 +55,14 @@ export default function ProfileForm({ user }: { user?: FormData }) {
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                     <input
                                         type="text"
-                                        id="name"
-                                        autoComplete="name"
+                                        defaultValue={user?.name}
                                         {...register('name')}
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         placeholder="janesmith"
                                     />
 
                                 </div>
-                                <p>{errors.name?.message}</p>
+                                {/* <p>{errors.name?.message}</p> */}
                             </div>
                         </div>
                     </div>
@@ -84,13 +73,12 @@ export default function ProfileForm({ user }: { user?: FormData }) {
                         </label>
                         <div className="mt-2">
                             <textarea
-                                id="bio"
                                 rows={3}
+                                defaultValue={user?.bio}
                                 {...register('bio')}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                defaultValue={''}
                             />
-                            <p>{errors.bio?.message}</p>
+                            {/* <p>{errors.bio?.message}</p> */}
                         </div>
                         <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
                     </div>
@@ -101,11 +89,11 @@ export default function ProfileForm({ user }: { user?: FormData }) {
                         </label>
                         <div className="mt-2">
                             <input
-                                id="twitter"
                                 {...register('twitter')}
+                                defaultValue={user?.twitter}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
-                            <p>{errors.twitter?.message}</p>
+                            {/* <p>{errors.twitter?.message}</p> */}
                         </div>
                     </div>
                     <div className="sm:col-span-4">
@@ -114,11 +102,11 @@ export default function ProfileForm({ user }: { user?: FormData }) {
                         </label>
                         <div className="mt-2">
                             <input
-                                id="instagram"
                                 {...register('instagram')}
+                                defaultValue={user?.instagram}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
-                            <p>{errors.instagram?.message}</p>
+                            {/* <p>{errors.instagram?.message}</p> */}
                         </div>
                     </div>
                     <div className="sm:col-span-4">
@@ -127,11 +115,11 @@ export default function ProfileForm({ user }: { user?: FormData }) {
                         </label>
                         <div className="mt-2">
                             <input
-                                id="discord"
                                 {...register('discord')}
+                                defaultValue={user?.discord}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
-                            <p>{errors.discord?.message}</p>
+                            {/* <p>{errors.discord?.message}</p> */}
                         </div>
                     </div>
                 </div>

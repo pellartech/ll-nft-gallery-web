@@ -3,7 +3,7 @@ import { Account } from '@/components/chain/Account'
 import { Connected } from '@/components/chain/Connected'
 import ProfileForm from '@/components/profile-form'
 import useSWR from "swr"
-import fetcher from '../../utils/fetcher'
+import fetcher from '@/utils/fetcher'
 
 // export const dynamic = 'force-dynamic'
 
