@@ -45,7 +45,7 @@ export function SendNFT({ contract, owner, tokenId }: { contract: string, owner:
         // abi: erc721ABI,
         functionName: 'safeTransferFrom',
         // args: ['0x4566ED6c7a7fFc90E2C7cfF7eB9156262afD2fDe', '0x640a6D5A3f155A8F0636a0396B18Ba5eEdfab440', parseInt(0)],
-        args: [debouncedFrom as `0x${string}`, debouncedTo as `0x${string}`, BigInt(debouncedTokenId)],
+        args: [debouncedFrom as `0x${string}`, debouncedTo as `0x${string}`, BigInt(parseInt(debouncedTokenId))],
         enabled: Boolean(debouncedFrom) && Boolean(debouncedTo) && Boolean(debouncedTokenId),
     })
     const { data, error, isError, write, isLoading } = useContractWrite(config)

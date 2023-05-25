@@ -1,14 +1,25 @@
+'use client'
 import CollectionsTable from "@/components/collections-table"
 import { NFTsCard } from "@/components/nfts-card"
-import { searchCollections, searchNfts } from "@/lib/api"
-
 import { Card, Title, Text } from '@tremor/react'
+import useSWR from "swr"
+import fetcher from '@/lib/fetcher'
 
 
-export default async function Home() {
+export default function Home() {
+  const collectionsFetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/collections?page_index=1&page_size=10&order_by=total_supply&sort_by=desc`
+  const nftsFetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/nfts?page_index=1&page_size=9&order_by=created&sort_by=desc`
+  const { data: collectionsData } = useSWR(collectionsFetchURL, fetcher)
+  const { data: nftsData } = useSWR(nftsFetchURL, fetcher)
 
-  const collectionsData = await searchCollections({ page_index: 1, page_size: 10, sort_by: 'total_supply', order_by: 'desc' })
-  const nftsData = await searchNfts({ page_index: 1, page_size: 9, sort_by: 'created', order_by: 'desc' })
+  if (!collectionsData || !nftsData) {
+    return (
+      <main className="p-4 md:p-10 mx-auto max-w-7xl">
+        <div>Loading...
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">

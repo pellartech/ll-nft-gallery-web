@@ -22,7 +22,7 @@ export default function Page({ params, searchParams }: { params: { address: stri
     if (!collection || !nftsData) {
         return (
             <main className="p-4 md:p-10 mx-auto max-w-7xl">
-                <div>This contract has not been imported.
+                <div>Loading...
                 </div>
             </main>
         )
