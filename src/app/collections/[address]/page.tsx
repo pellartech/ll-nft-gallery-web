@@ -1,18 +1,32 @@
 'use client'
 import { NFTsCard } from "@/components/nfts-card"
-import { getCollection, searchNfts } from "@/lib/api"
-import { Card, Metric, Text, Title, Subtitle, Bold, Italic } from '@tremor/react'
+import { Card, Metric, Text, Title } from '@tremor/react'
 import Search from "@/components/search"
+import { useAccount } from 'wagmi'
+import useSWR from "swr"
+import fetcher from '@/lib/fetcher'
 
-// export const dynamic = 'force-dynamic'
-
-export default async function Page({ params, searchParams }: { params: { address: string }, searchParams: { q: string } }) {
+export default function Page({ params, searchParams }: { params: { address: string }, searchParams: { q: string } }) {
     const search = searchParams.q ?? ''
-    const address = params.address
+    const contract_address = params.address
 
-    const collection = await getCollection(address)
+    const { isConnected, address } = useAccount()
 
-    const nftsData = await searchNfts({ page_index: 1, page_size: 20, sort_by: 'desc', order_by: 'created', contract_address: address, terms: search })
+    const collectionFetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/collections/${contract_address}`
+
+    const nftsFetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/nfts?page_index=1&page_size=20&order_by=created&sort_by=desc&contract_address=${contract_address}&terms=${search}`
+    const { data: collection } = useSWR(collectionFetchURL, fetcher)
+    const { data: nftsData } = useSWR(nftsFetchURL, fetcher)
+
+
+    if (!collection || !nftsData) {
+        return (
+            <main className="p-4 md:p-10 mx-auto max-w-7xl">
+                <div>This contract has not been imported.
+                </div>
+            </main>
+        )
+    }
 
     return (
         <main className="p-4 md:p-10 mx-auto max-w-7xl">
@@ -28,12 +42,23 @@ export default async function Page({ params, searchParams }: { params: { address
 
                 <Text>Contract:{collection.contract_address}</Text>
 
-                <Text>Total Supply:{collection.total_supply}</Text>
+                <Text>Owner:{collection.owner_address}</Text>
 
-                <a href={`/collections/${collection.contract_address}/edit`} className="text-sm font-semibold leading-6 text-gray-900">
-                    Edit
-                </a>
-                {/* <Text>Fetched: {collection.number_of_fetched}</Text> */}
+                <Text>Total Supply:{collection.total_supply}</Text>
+                <Text>About: {collection.description}</Text>
+                <Text>Website: {collection.website}</Text>
+                <Text>Discord: {collection.discord}</Text>
+                <Text>Instagram: {collection.instagram}</Text>
+                <Text>Twitter: {collection.twitter}</Text>
+
+                {
+                    isConnected && String(address) === collection.owner_address ?
+                        <a href={`/collections/${collection.contract_address}/edit`} className="text-sm font-semibold leading-6 text-gray-900">
+                            Edit
+                        </a> : <></>
+                }
+
+
             </Card>
             <Title className="relative mt-5 max-w-md">NFTs</Title>
             <Search type='nft' />

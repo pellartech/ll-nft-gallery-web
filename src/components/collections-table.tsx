@@ -12,7 +12,7 @@ import {
 import Link from 'next/link'
 import { Collection } from '@/interfaces/ICollection'
 
-export default async function CollectionsTable({ items }: { items: Collection[] }) {
+export default function CollectionsTable({ items }: { items: Collection[] }) {
     return (
         <>
             <Table className='mt-5'>
@@ -20,6 +20,7 @@ export default async function CollectionsTable({ items }: { items: Collection[] 
                     <TableRow>
                         <TableHeaderCell>Name</TableHeaderCell>
                         <TableHeaderCell>Symbol</TableHeaderCell>
+                        <TableHeaderCell>Owner</TableHeaderCell>
                         <TableHeaderCell>Contract</TableHeaderCell>
                         <TableHeaderCell>Total Supply</TableHeaderCell>
                     </TableRow>
@@ -30,6 +31,11 @@ export default async function CollectionsTable({ items }: { items: Collection[] 
                             <TableCell><Text>{item.name}</Text></TableCell>
                             <TableCell>
                                 <Text>{item.symbol}</Text>
+                            </TableCell>
+                            <TableCell>
+                                <Link key={item.key} as={`/profile/${item.owner_address}`} href="/profile/[address]">
+                                    {item.owner_address}
+                                </Link>
                             </TableCell>
                             <TableCell>
                                 <Link key={item.key} as={`/collections/${item.contract_address}`} href="/collections/[address]">

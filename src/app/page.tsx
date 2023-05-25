@@ -14,7 +14,6 @@ export default async function Home() {
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Title>List of Collections</Title>
       <Card className="mt-6">
-         {/* @ts-expect-error Server Component */}
         <CollectionsTable items={collectionsData.items} />
       </Card>
 

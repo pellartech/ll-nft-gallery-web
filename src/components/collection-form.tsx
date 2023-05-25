@@ -24,15 +24,16 @@ export default function CollectionForm({ collection }: { collection?: any }) {
     const router = useRouter()
     const [logo, setLogo] = useState(null)
     const [background, setBackground] = useState(null)
+    const [isPending, setIsPending] = useState(false)
 
 
     const schema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
         description: Yup.string().required('Description is required'),
         website: Yup.string().required('Twitter is required'),
-        twitter: Yup.string().required('Twitter is required'),
-        instagram: Yup.string().required('Instagram is required'),
-        discord: Yup.string().required('Discord is required')
+        twitter: Yup.string().optional(),
+        instagram: Yup.string().optional(),
+        discord: Yup.string().optional()
     })
 
     const uploadLogo = (event: any) => {
@@ -48,7 +49,7 @@ export default function CollectionForm({ collection }: { collection?: any }) {
 
     const onSubmit = async (formData: any) => {
         // console.log(formdata)
-
+        setIsPending(true)
         const result = await updateCollection(
             collection?.contract_address!,
             formData?.name!,
@@ -198,7 +199,7 @@ export default function CollectionForm({ collection }: { collection?: any }) {
                     type="submit"
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                    Save
+                    {isPending ? 'Updating...' : 'Save'}
                 </button>
             </div>
         </form>

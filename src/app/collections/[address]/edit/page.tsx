@@ -1,6 +1,6 @@
 'use client'
 import useSWR from "swr"
-import fetcher from '@/utils/fetcher'
+import fetcher from '@/lib/fetcher'
 import React, { useState, useEffect } from 'react'
 import CollectionForm from '@/components/collection-form'
 

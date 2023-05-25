@@ -13,8 +13,8 @@ export const NFTCard = ({ item }: { item: NFT }) => {
                 <div className="flex flex-col y-gap-2 px-2 py-3 bg-slate-100 rounded-b-md h-110 ">
                     <div className="">
                         <h2 className="text-xl text-gray-800">{item.name}</h2>
-                        {/* <p className="text-gray-600">Id: {item.token_id}</p>
-                        <p className="text-gray-600" >{item.contract_address}</p> */}
+                        <p className="text-gray-600">Id: {item.token_id}</p>
+                        <p className="text-gray-600" >Owner:{item.owner_address}</p>
                     </div>
 
                     {/* <div className="flex-grow mt-2">

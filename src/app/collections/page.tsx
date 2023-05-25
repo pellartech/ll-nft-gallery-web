@@ -16,7 +16,6 @@ export default async function Page({ searchParams }: { searchParams: { q: string
       <Title>List of Collections</Title>
       <Search type='collection' />
       <Card className="mt-6">
-         {/* @ts-expect-error Server Component */}
         <CollectionsTable items={collectionsData.items} />
       </Card>
     </main>
