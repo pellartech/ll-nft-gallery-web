@@ -16,7 +16,7 @@ export default function RootLayout({
   
   return (
     <html lang="en" className="h-full bg-gray-50">
-      <body>
+      <body className='bg-[#000000]'>
         <Providers>
           <Navbar />
           {children}

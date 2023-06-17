@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { NFT } from "@/interfaces/INFT";
+import { Collection } from "@/interfaces/ICollection";
 import { formatAccountDisplay, getImage } from "@/utils/utils";
 
-export const NFTCard = ({ item }: { item: NFT }) => {
+export const CollectionCard = ({ item }: { item: Collection }) => {
   return (
     <div
       key={item.key}
@@ -10,14 +10,14 @@ export const NFTCard = ({ item }: { item: NFT }) => {
     >
       <Link
         key={item.key}
-        as={`/collections/${item.contract_address}/tokens/${item.token_id}`}
+        as={`/collections/${item.contract_address}`}
         href="/collections/[address]/tokens/[id]"
       >
         <div>
           <div
             className="rounded-t-xl"
             style={{
-              backgroundImage: `url(${getImage(item?.image?.normal)})`,
+              backgroundImage: `url(${getImage(item?.logo?.normal)})`,
               backgroundPosition: "50% 50%",
               backgroundSize: "cover",
               backgroundColor: "#000000",
@@ -29,18 +29,11 @@ export const NFTCard = ({ item }: { item: NFT }) => {
         <div className="flex flex-col y-gap-2 px-2 py-3 bg-slate-100 rounded-b-md h-110 ">
           <div className="">
             <div className="text-grey-80 text-xs text-right mb-1">
-              {/* {item?.total_supply} NFTs */}
+              {item?.total_supply} NFTs
             </div>
             <h2 className="text-base text-white">{item.name}</h2>
             <p className="text-grey-80 text-xs flex items-center justify-between mt-3">
-              Token ID:{" "}
-              <span className="text-white text-sm">#{item?.token_id}</span>
-            </p>
-            <p className="text-grey-80 text-xs flex items-center justify-between mt-3">
-              Owner:
-              <span className="text-white text-sm">
-                {formatAccountDisplay(item.owner_address)}
-              </span>
+              Owner:<span className="text-white text-sm">{formatAccountDisplay(item.owner_address)}</span>
             </p>
           </div>
         </div>

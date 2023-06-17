@@ -5,4 +5,5 @@ export interface Collection {
     contract_address: string;
     owner_address: string;
     total_supply: number;
+    logo: any
 }
