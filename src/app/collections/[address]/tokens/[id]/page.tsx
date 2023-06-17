@@ -50,7 +50,7 @@ export default function Page({
     <main className="p-4 md:p-10 mx-auto max-w-7xl text-white">
       <div className="flex flex-col lg:flex-row items-start gap-12">
         <div
-          className="rounded-2xl m-auto max-w-[500px] lg:max-w-full w-full lg:w-1/2"
+          className="rounded-2xl mx-auto max-w-[500px] lg:max-w-full w-full lg:w-1/2"
           style={{
             backgroundImage: `url(${getImage(nft?.image?.normal)})`,
             backgroundPosition: "50% 50%",
