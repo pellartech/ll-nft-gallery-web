@@ -48,7 +48,6 @@ export default function CollectionForm({ collection }: { collection?: any }) {
     })
 
     const onSubmit = async (formData: any) => {
-        // console.log(formdata)
         setIsPending(true)
         const result = await updateCollection(
             collection?.contract_address!,
@@ -61,7 +60,6 @@ export default function CollectionForm({ collection }: { collection?: any }) {
             logo,
             background)
         if (result) {
-            // console.log("updated:", result.data)
             return router.push(`/collections/${collection?.contract_address!}`)
         }
 

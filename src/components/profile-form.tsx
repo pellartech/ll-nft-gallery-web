@@ -30,7 +30,6 @@ export default function ProfileForm({ user }: { user?: FormData }) {
     })
 
     const onSubmit = async (data: FormData) => {
-        console.log(data)
         const result = await updateProfile(token, data.name, data.bio, data.twitter, data.instagram, data.discord)
         if (result) {
             console.log("updated:", result.data)
