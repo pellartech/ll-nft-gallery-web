@@ -153,7 +153,7 @@ export default function Page({
                         </div>
                         <div className="font-medium text-sm">1.5%</div>
                       </div>
-                      <Image src="/images/icons/arrow-right.svg" alt="" />
+                      <img src="/images/icons/arrow-right.svg" alt="" />
                     </div>
                   </div>
                   {size(nft?.attributes) > 1 &&
@@ -189,7 +189,7 @@ export default function Page({
               <div className="flex justify-between">
                 <div className="text-grey-80 flex gap-1.5">
                   Creator earning{" "}
-                  <Image
+                  <img
                     title="Fee"
                     className="cursor-pointer"
                     src="/images/icons/tooltip.svg"
@@ -256,7 +256,7 @@ export default function Page({
                   </div>
                   <div className="font-semibold flex">
                     0.03 LL{" "}
-                    <Image
+                    <img
                       className="ml-2"
                       alt=""
                       src="/images/icons/new-link.svg"
@@ -291,7 +291,7 @@ export default function Page({
                   </div>
                   <div className="font-semibold flex">
                     1.55 LL{" "}
-                    <Image
+                    <img
                       className="ml-2"
                       alt=""
                       src="/images/icons/new-link.svg"

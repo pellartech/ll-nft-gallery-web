@@ -27,7 +27,7 @@ export default async function Page({
       <div className="text-5xl text-white font-semibold mb-8">Collections</div>
       <div className="flex gap-5">
         <div className="flex items-center gap-2 rounded-[10px] p-4 h-[52px] bg-dark-90 text-white font-semibold">
-          <Image src="/images/icons/filter.svg" alt="Filter" />
+          <img src="/images/icons/filter.svg" alt="Filter" />
           Filter
         </div>
         <Search type="collection" />

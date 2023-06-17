@@ -6,7 +6,7 @@ export const Back = () => {
   // const navigate = useNavigate()
   return (
     <div className="text-grey-80 font-medium text-base flex gap-2 cursor-pointer">
-      <Image alt="" src="/images/icons/back.svg" />
+      <img alt="" src="/images/icons/back.svg" />
       Back
     </div>
   );

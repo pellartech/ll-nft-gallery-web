@@ -33,7 +33,7 @@ export default function Search({ disabled, type }: { disabled?: boolean, type?: 
                     className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
                     aria-hidden="true"
                 >
-                    <Image alt="" src="/images/icons/search.svg" />
+                    <img alt="" src="/images/icons/search.svg" />
                 </div>
                 <input
                     type="text"

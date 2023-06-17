@@ -90,7 +90,7 @@ export default function Page({
                 target="_blank"
               >
                 {formatAccountDisplay(collection?.contract_address)}{" "}
-                <Image alt="" src="/images/icons/new-link.svg" />
+                <img alt="" src="/images/icons/new-link.svg" />
               </a>
             </div>
           </div>

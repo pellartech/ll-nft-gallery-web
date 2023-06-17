@@ -113,7 +113,7 @@ export default function CollectionForm({ collection }: { collection?: any }) {
                             </label>
                             <div className="mt-2 flex justify-center rounded-lg ">
                                 {
-                                    collection?.logo ? <Image alt="" className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.logo && collection.logo.small}`} />
+                                    collection?.logo ? <img alt="" className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.logo && collection.logo.small}`} />
                                         : <></>
                                 }
 
@@ -128,7 +128,7 @@ export default function CollectionForm({ collection }: { collection?: any }) {
                             </label>
                             <div className="mt-2 flex justify-center rounded-lg ">
                                 {
-                                    collection?.background ? <Image alt="" className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.background && collection.background.small}`} />
+                                    collection?.background ? <img alt="" className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.background && collection.background.small}`} />
                                         : <></>
                                 }
                             </div>
