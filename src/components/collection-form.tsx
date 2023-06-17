@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { updateCollection } from '@/lib/api'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 
 type FormData = {
@@ -112,7 +113,7 @@ export default function CollectionForm({ collection }: { collection?: any }) {
                             </label>
                             <div className="mt-2 flex justify-center rounded-lg ">
                                 {
-                                    collection?.logo ? <img className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.logo && collection.logo.small}`} ></img>
+                                    collection?.logo ? <Image alt="" className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.logo && collection.logo.small}`} />
                                         : <></>
                                 }
 
@@ -127,7 +128,7 @@ export default function CollectionForm({ collection }: { collection?: any }) {
                             </label>
                             <div className="mt-2 flex justify-center rounded-lg ">
                                 {
-                                    collection?.background ? <img className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.background && collection.background.small}`} ></img>
+                                    collection?.background ? <Image alt="" className="object-cover h-128 w-128 rounded-t-md" src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${collection.background && collection.background.small}`} />
                                         : <></>
                                 }
                             </div>

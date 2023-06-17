@@ -3,6 +3,7 @@ import xxx, { usePathname } from "next/navigation";
 import { ConnectButton } from "@/components/chain/ConnectButton";
 import Link from "next/link";
 import { size } from "lodash";
+import Image from "next/image";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -31,7 +32,7 @@ export default function Navbar() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             {/* <span className="sr-only">LightLink</span> */}
-            <img className="h-6 w-auto" src="/images/logo.png" alt="" />
+            <Image className="h-6 w-auto" src="/images/logo.png" alt="" />
           </a>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">

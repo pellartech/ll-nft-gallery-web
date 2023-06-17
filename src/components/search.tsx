@@ -1,6 +1,7 @@
 'use client';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
@@ -32,7 +33,7 @@ export default function Search({ disabled, type }: { disabled?: boolean, type?: 
                     className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
                     aria-hidden="true"
                 >
-                    <img src="/images/icons/search.svg" />
+                    <Image alt="" src="/images/icons/search.svg" />
                 </div>
                 <input
                     type="text"

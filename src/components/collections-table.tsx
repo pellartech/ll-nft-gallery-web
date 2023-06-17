@@ -16,8 +16,8 @@ import { CollectionCard } from "./collection-card";
 export default function CollectionsTable({ items }: { items: Collection[] }) {
   return (
     <div className="flex flex-wrap gap-5 mt-8">
-      {items.map((item: Collection) => (
-        <CollectionCard item={item} />
+      {items.map((item: Collection, index: number) => (
+        <CollectionCard item={item} key={index} />
       ))}
     </div>
   );

@@ -12,6 +12,7 @@ import {
   generateEtherscanRootUrl,
   getImage,
 } from "@/utils/utils";
+import Image from "next/image";
 
 export default function Page({
   params,
@@ -89,7 +90,7 @@ export default function Page({
                 target="_blank"
               >
                 {formatAccountDisplay(collection?.contract_address)}{" "}
-                <img src="/images/icons/new-link.svg" />
+                <Image alt="" src="/images/icons/new-link.svg" />
               </a>
             </div>
           </div>
