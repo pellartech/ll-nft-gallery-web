@@ -10,6 +10,7 @@ export default function Page({ params }: { params: { address: string } }) {
 
     const fetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/users/${address}`
     const { data } = useSWR(fetchURL, fetcher)
+    console.log('data: ', data)
 
     if (!data) {
         return (

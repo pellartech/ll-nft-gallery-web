@@ -4,12 +4,13 @@ import { ConnectButton } from "@/components/chain/ConnectButton";
 import Link from "next/link";
 import { size } from "lodash";
 import Image from "next/image";
+import { useAccount } from "wagmi";
 
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Browse collections", href: "/collections" },
-  { name: "Fetch Nfts", href: "/fetch-nfts" },
-  { name: "Profile", href: "/profile" },
+  // { name: "Fetch Nfts", href: "/fetch-nfts" },
+  { name: "Profile", href: "/profile", auth: true },
 ];
 
 function classNames(...classes: string[]) {
@@ -17,10 +18,12 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar() {
+  const { isConnected } = useAccount();
   const pathname = usePathname();
   const pathComponent = pathname.split("/");
   const lighterHeader =
-    size(pathComponent) === 3 && pathComponent[1] === "collections"
+    (size(pathComponent) === 3 && pathComponent[1] === "collections") ||
+    pathname === "/profile"
       ? true
       : false;
   return (
@@ -36,23 +39,26 @@ export default function Navbar() {
           </a>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={classNames(
-                pathname === item.href
-                  ? "text-white"
-                  : "border-transparent text-grey-80 hover:text-white hover:border-gray-300",
-                "inline-flex items-center px-1 pt-1 text-base font-medium"
-              )}
-              aria-current={pathname === item.href ? "page" : undefined}
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navigation.map((item) => {
+            if (item?.auth && !isConnected) return <></>
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={classNames(
+                  pathname === item.href
+                    ? "text-white"
+                    : "border-transparent text-grey-80 hover:text-white hover:border-gray-300",
+                  "inline-flex items-center px-1 pt-1 text-base font-medium"
+                )}
+                aria-current={pathname === item.href ? "page" : undefined}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="lg:flex lg:flex-1 lg:justify-end">
           {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
                         Log in <span aria-hidden="true">&rarr;</span>
                     </a> */}
