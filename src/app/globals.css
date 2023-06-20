@@ -25,3 +25,47 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+.custom-select {
+  background-color: #1C1C1C;
+  border-radius: 10px;
+  padding: 7px 10px;
+  cursor: pointer;
+
+  [class$="-control"] {
+    color: var(--blue-primary-25);
+    background: #1C1C1C;
+    border-radius: 999px;
+    border: none;
+    box-shadow: none;
+  }
+
+  [class$="-Input"] {
+    margin: 0;
+    padding: 0;
+  }
+
+  [class$="-ValueContainer"] {
+    padding: 0;
+  }
+
+  [class$="-singleValue"] {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  [class$="-indicatorSeparator"] {
+    display: none;
+  }
+
+  [class$="-indicatorContainer"] {
+    padding: 8px 0;
+  }
+
+  [class$="-indicatorContainer"] {
+    svg {
+      /* fill: var(--blue-primary-25); */
+    }
+  }
+}

@@ -12,7 +12,14 @@ import {
   generateEtherscanRootUrl,
   getImage,
 } from "@/utils/utils";
-import Image from "next/image";
+import { SelectFilter } from "@/components/select-filter";
+import { useEffect, useState } from "react";
+import { getCollection, searchNfts } from "@/lib/api";
+
+const filterNFT = [
+  { value: "desc_created", label: "Newest", type: "created" },
+  { value: "asc_created", label: "Oldest", type: "created" },
+];
 
 export default function Page({
   params,
@@ -24,13 +31,50 @@ export default function Page({
   const search = searchParams.q ?? "";
   const contract_address = params.address;
 
-  const { isConnected, address } = useAccount();
+  const [selectFilterNFT, setSelectFilterNFT] = useState(filterNFT[0]);
+  const [collection, setCollection] = useState<any>();
+  const [nftsData, setNftsData] = useState<any>();
+  const [filter, setFilter] = useState({
+    terms: search,
+    page_index: 1,
+    page_size: 20,
+    sort_by: "created",
+    order_by: "desc",
+  });
 
-  const collectionFetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/collections/${contract_address}`;
+  useEffect(() => {
+    setFilter({ ...filter, terms: search });
+  }, [search]);
 
-  const nftsFetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/nfts?page_index=1&page_size=20&order_by=created&sort_by=desc&contract_address=${contract_address}&terms=${search}`;
-  const { data: collection } = useSWR(collectionFetchURL, fetcher);
-  const { data: nftsData } = useSWR(nftsFetchURL, fetcher);
+  useEffect(() => {
+    getDataNfts();
+  }, [filter]);
+
+  const getDataNfts = async () => {
+    const data = await searchNfts(filter);
+    setNftsData(data);
+  };
+
+  const getDataCollection = async () => {
+    const data = await getCollection(contract_address);
+    setCollection(data);
+  };
+
+  useEffect(() => {
+    getDataCollection();
+  }, [contract_address]);
+
+  useEffect(() => {
+    if (selectFilterNFT.value === "desc_created") {
+      setFilter({ ...filter, sort_by: "created", order_by: "desc" });
+    }
+    if (selectFilterNFT.value === "asc_created") {
+      setFilter({ ...filter, sort_by: "created", order_by: "asc" });
+    }
+  }, [selectFilterNFT]);
+
+  // const { data: collection } = useSWR(collectionFetchURL, fetcher);
+  // const { data: nftsData } = useSWR(nftsFetchURL, fetcher);
 
   if (!collection || !nftsData) {
     return (
@@ -40,11 +84,9 @@ export default function Page({
     );
   }
 
-  console.log('nftsData: ', nftsData)
-
   return (
-    <main className="text-white">
-      <div className="bg-[#141414]">
+    <main className="">
+      <div className="bg-[#141414] text-white">
         <div className="max-w-7xl mx-auto flex flex-col gap-4 lg:justify-between lg:flex-row items-center pb-6 p-4 md:p-10">
           <div className="w-full lg:w-auto">
             <Back />
@@ -96,46 +138,17 @@ export default function Page({
           </div>
         </div>
       </div>
-      {/* <Title>Collection</Title> */}
-      {/* <Card className="mt-6">
-        {collection.logo ? (
-          <img
-            className="object-cover h-128 w-128 rounded-t-md"
-            src={`${process.env.NEXT_PUBLIC_S3_BASEURL}/${
-              collection.logo && collection.logo.small
-            }`}
-          ></img>
-        ) : (
-          <></>
-        )}
-        <Metric>Name:{collection.name}</Metric>
-
-        <Title>Symbol:{collection.symbol}</Title>
-
-        <Text>Contract:{collection.contract_address}</Text>
-
-        <Text>Owner:{collection.owner_address}</Text>
-
-        <Text>Total Supply:{collection.total_supply}</Text>
-        <Text>About: {collection.description}</Text>
-        <Text>Website: {collection.website}</Text>
-        <Text>Discord: {collection.discord}</Text>
-        <Text>Instagram: {collection.instagram}</Text>
-        <Text>Twitter: {collection.twitter}</Text>
-
-        {isConnected && String(address) === collection.owner_address ? (
-          <a
-            href={`/collections/${collection.contract_address}/edit`}
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Edit
-          </a>
-        ) : (
-          <></>
-        )}
-      </Card> */}
       <div className="p-4 md:p-10 mx-auto max-w-7xl">
-        <Search type="nft" />
+        <div className="flex gap-5">
+          <Search type="nft" />
+          <div className="w-[200px]">
+            <SelectFilter
+              options={filterNFT}
+              selectedOption={selectFilterNFT}
+              onSelectedOption={(selected: any) => setSelectFilterNFT(selected)}
+            />
+          </div>
+        </div>
         <NFTsCard items={nftsData.items} />
       </div>
     </main>
