@@ -15,6 +15,7 @@ import {
 import { SelectFilter } from "@/components/select-filter";
 import { useEffect, useState } from "react";
 import { getCollection, searchNfts } from "@/lib/api";
+import ReactPaginate from "react-paginate";
 
 const filterNFT = [
   { value: "desc_created", label: "Newest", type: "created" },
@@ -73,8 +74,12 @@ export default function Page({
     }
   }, [selectFilterNFT]);
 
-  // const { data: collection } = useSWR(collectionFetchURL, fetcher);
-  // const { data: nftsData } = useSWR(nftsFetchURL, fetcher);
+  const handlePageChange = (pageIndex: number) => {
+    setFilter({
+      ...filter,
+      page_index: pageIndex + 1,
+    });
+  };
 
   if (!collection || !nftsData) {
     return (
@@ -150,6 +155,19 @@ export default function Page({
           </div>
         </div>
         <NFTsCard items={nftsData.items} />
+        {nftsData?.total_pages > 1 && (
+          <ReactPaginate
+            className="react-pagination"
+            breakLabel="..."
+            nextLabel=">"
+            pageCount={nftsData?.total_pages}
+            previousLabel="<"
+            renderOnZeroPageCount={null}
+            onPageChange={({ selected }) => {
+              handlePageChange(selected);
+            }}
+          />
+        )}
       </div>
     </main>
   );

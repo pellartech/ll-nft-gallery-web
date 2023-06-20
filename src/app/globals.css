@@ -27,18 +27,18 @@ body {
 } */
 
 body {
-  font-family: 'Inter';
+  font-family: "Inter";
 }
 
 .custom-select {
-  background-color: #1C1C1C;
+  background-color: #1c1c1c;
   border-radius: 10px;
   padding: 7px 10px;
   cursor: pointer;
 
   [class$="-control"] {
     color: var(--blue-primary-25);
-    background: #1C1C1C;
+    background: #1c1c1c;
     border-radius: 999px;
     border: none;
     box-shadow: none;
@@ -66,10 +66,47 @@ body {
   [class$="-indicatorContainer"] {
     padding: 8px 0;
   }
+}
 
-  [class$="-indicatorContainer"] {
-    svg {
-      /* fill: var(--blue-primary-25); */
+.react-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  gap: 5px;
+  color: white;
+}
+
+.react-pagination li {
+  border-radius: 5px;
+
+  &.selected {
+    background-color: #222222;
+
+    a {
+      color: var(--white);
+      border-radius: 5px;
     }
   }
+
+  &.disabled {
+    opacity: 0.5;
+    a {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.react-pagination li a {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border: 1px solid var(--blue-primary-25);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--blue-primary-25);
 }

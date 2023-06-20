@@ -3,10 +3,8 @@ import CollectionsTable from "@/components/collections-table";
 import Search from "@/components/search";
 import { SelectFilter } from "@/components/select-filter";
 import { searchCollections } from "@/lib/api";
-
-import { Card, Title, Text } from "@tremor/react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 
 // export const dynamic = 'force-dynamic'
 const filterCollection = [
@@ -37,7 +35,7 @@ export default function Page({
   const [filter, setFilter] = useState({
     terms: search,
     page_index: 1,
-    page_size: 40,
+    page_size: 20,
     sort_by: "created",
     order_by: "desc",
   });
@@ -70,6 +68,13 @@ export default function Page({
     }
   }, [selectFilterCollection]);
 
+  const handlePageChange = (pageIndex: number) => {
+    setFilter({
+      ...filter,
+      page_index: pageIndex + 1,
+    });
+  };
+
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <div className="text-5xl text-white font-semibold mb-8">Collections</div>
@@ -90,6 +95,19 @@ export default function Page({
         </div>
       </div>
       {collectionsData && <CollectionsTable items={collectionsData?.items} />}
+      {collectionsData?.total_pages > 1 && (
+        <ReactPaginate
+          className="react-pagination"
+          breakLabel="..."
+          nextLabel=">"
+          pageCount={collectionsData?.total_pages}
+          previousLabel="<"
+          renderOnZeroPageCount={null}
+          onPageChange={({ selected }) => {
+            handlePageChange(selected);
+          }}
+        />
+      )}
     </main>
   );
 }
