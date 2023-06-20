@@ -26,6 +26,10 @@ body {
     rgb(var(--background-start-rgb));
 } */
 
+body {
+  font-family: 'Inter';
+}
+
 .custom-select {
   background-color: #1C1C1C;
   border-radius: 10px;
