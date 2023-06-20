@@ -2,7 +2,6 @@ import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import Navbar from "@/components/navbar";
 import { Providers } from "./providers";
-import { Head } from "next/document";
 
 export const metadata = {
   title: "LightLink NFT Marketplace Demo",
