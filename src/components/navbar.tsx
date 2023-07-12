@@ -20,7 +20,7 @@ function classNames(...classes: string[]) {
 export default function Navbar() {
   const { isConnected, address } = useAccount();
   const pathname = usePathname();
-  const pathComponent = pathname.split("/");
+  const pathComponent = pathname!.split("/");
   const lighterHeader =
     (size(pathComponent) === 3 && pathComponent[1] === "collections") ||
       pathname === "/profile"
