@@ -27,7 +27,7 @@ const Input: React.FC<InputProps> = ({
     return (
         <div className="sm:col-span-4 mt-4">
             {label &&
-                <label htmlFor={name} className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor={name} className="block text-sm font-medium leading-6 text-grey-80">
                     {label}
                 </label>
             }
@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
                             type="text"
                             {...register(name)}
                             defaultValue={defaultValue}
-                            className={`bg-dark-90 placeholder:text-dark-90 block w-full rounded-md border-0 p-2 text-sm ${icon ? "pl-10" : ""}`}
+                            className={`bg-dark-90 placeholder:text-dark-90 text-white block w-full rounded-md border-0 p-2 text-sm ${icon ? "pl-10" : ""}`}
                             placeholder={placeholder}
                             {...additionalProps}
                         />
@@ -49,7 +49,7 @@ const Input: React.FC<InputProps> = ({
                         rows={3}
                         {...register(name)}
                         defaultValue={defaultValue}
-                        className="bg-dark-90 placeholder:text-dark-90 block w-full rounded-md border-0 p-2 text-sm"
+                        className="bg-dark-90 placeholder:text-dark-90 block w-full text-white rounded-md border-0 p-2 text-sm"
                         {...additionalProps}
                     />
                 )}
