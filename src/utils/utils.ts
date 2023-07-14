@@ -2,6 +2,7 @@ import moment from 'moment'
 // import 'moment-duration-format'
 
 export const getImage = (img: any) => {
+  if (!img) return ''
   return `${process.env.NEXT_PUBLIC_S3_BASEURL}/${img}`;
 };
 

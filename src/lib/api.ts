@@ -110,10 +110,24 @@ export async function getProfile(token: any) {
 export async function updateProfile(token: any, name?: string, bio?: string, twitter?: string, instagram?: string, discord?: string) {
     let path = `/api/v1/auth/profile`
     const resp = await _instance.put(path, {
-        name, bio, twitter, instagram, discord
+        name, bio, twitter, instagram, discord, wallet_address: '0xde62C75255e6cd1EC7C5dAAFDEF1aC1ABaae1848'
     }, {
         headers: {
-            Authorization: `Bearer ${encodeURIComponent(token)}`,
+            Authorization: `Bearer ${token}`,
+        }
+    })
+    return resp.data
+}
+
+export async function updateProfileAvatar(token: any, imageData: File) {
+    let formData = new FormData()
+    formData.append('file', imageData)
+
+    let path = `/api/v1/auth/avatar`
+    const resp = await _instance.post(path, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
         }
     })
     return resp.data
