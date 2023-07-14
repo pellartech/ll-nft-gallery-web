@@ -119,6 +119,20 @@ export async function updateProfile(token: any, name?: string, bio?: string, twi
     return resp.data
 }
 
+export async function updateProfileAvatar(token: any, imageData: File) {
+    let formData = new FormData()
+    formData.append('file', imageData)
+
+    let path = `/api/v1/auth/avatar`
+    const resp = await _instance.post(path, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+        }
+    })
+    return resp.data
+}
+
 export async function updateCollection(
     contract_address: string,
     name: string,

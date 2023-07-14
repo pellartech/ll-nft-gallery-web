@@ -4,5 +4,8 @@ export type IUser = {
     wallet_address?: string,
     twitter?: string,
     instagram?: string,
-    discord?: string
+    discord?: string,
+    avatar?: {
+        original?: string
+    }
 }
