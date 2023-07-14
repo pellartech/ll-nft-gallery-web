@@ -1,16 +1,18 @@
-import { useRef, useState, ChangeEvent, ReactNode } from 'react';
+import { useRef, useState, ChangeEvent, ReactNode, useEffect } from 'react';
 
 interface FileInputProps {
     accept: string;
     defaultImage: string;
+    imageClass: string;
     onFileChange: (file: File | null) => void;
     children?: ReactNode;
     label?: string;
 }
 
-const FileInput = ({ accept, defaultImage, onFileChange, children, label }: FileInputProps) => {
+const FileInput = ({ accept, defaultImage, onFileChange, children, label, imageClass = '' }: FileInputProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [preview, setPreview] = useState<string>(defaultImage);
+    useEffect(() => setPreview(defaultImage), [defaultImage])
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
@@ -35,7 +37,7 @@ const FileInput = ({ accept, defaultImage, onFileChange, children, label }: File
     };
 
     return (
-        <>
+        <div className="mt-4">
             {label &&
                 <label className="block text-sm font-medium leading-6 text-grey-80">
                     {label}
@@ -48,9 +50,11 @@ const FileInput = ({ accept, defaultImage, onFileChange, children, label }: File
                 ref={inputRef}
                 className="hidden"
             />
-            <img className="object-cover w-full h-full cursor-pointer mb-8" src={preview} alt="preview" onClick={triggerFileInput} />
+            <div className={`overflow-hidden ${imageClass}`}>
+                <img className={`object-cover cursor-pointer w-full h-full`} src={preview} alt="preview" onClick={triggerFileInput} />
+            </div>
             {children}
-        </>
+        </div>
     );
 };
 
