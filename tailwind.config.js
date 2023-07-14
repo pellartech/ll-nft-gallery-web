@@ -12,6 +12,9 @@ module.exports = {
     transparent: "transparent",
     current: "currentColor",
     extend: {
+      aspectRatio: {
+        "aspect-banner": "609/160"
+      },
       colors: {
         "text-error": "#FF4B5C",
       },
@@ -34,5 +37,8 @@ module.exports = {
       black: "#000000",
     },
   },
-  plugins: [require("@headlessui/tailwindcss")],
+  plugins: [
+    require("@headlessui/tailwindcss"),
+    require("@tailwindcss/aspect-ratio")
+  ],
 };
