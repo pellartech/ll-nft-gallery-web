@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import { updateProfile, updateProfileAvatar } from '@/lib/api'
+import UserAPI from '@/lib/api/UserApi'
 import Input from './input'
 import { useRouter } from 'next/navigation'
 import Button from './button'
@@ -14,6 +14,7 @@ export default function ProfileForm({ user }: { user?: IUser }) {
     const [loading, setLoading] = useState(false)
     const [avatar, setAvatar] = useState<File | null>()
     const router = useRouter()
+    const userApi = new UserAPI();
 
     const originalAvatar = useMemo(() => {
         console.log('user: ', user)
@@ -33,7 +34,7 @@ export default function ProfileForm({ user }: { user?: IUser }) {
     const onSubmit = async (data: IUser) => {
         setLoading(true)
         const token = window.localStorage.getItem("lightlink-web-token")
-        const result = await updateProfile(token, data.name, data.bio, data.twitter, data.instagram, data.discord)
+        const result = await userApi.updateProfile(token, data.name, data.bio, data.twitter, data.instagram, data.discord)
         if (result) {
             router.push(`/profile/${user?.wallet_address}`)
         } else {
@@ -43,7 +44,7 @@ export default function ProfileForm({ user }: { user?: IUser }) {
 
     const handleAvatarUpload = async (file: File) => {
         const token = window.localStorage.getItem("lightlink-web-token")
-        await updateProfileAvatar(token, file)
+        await userApi.updateProfileAvatar(token, file)
     }
 
     useEffect(() => {

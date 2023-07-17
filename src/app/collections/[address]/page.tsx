@@ -1,4 +1,4 @@
-import { getCollection } from "@/lib/api"
+import CollectionAPI from "@/lib/api/CollectionApi";
 import { Profile } from "@/modules"
 import Collection from "@/modules/Collection"
 import { formatAccountDisplay } from "@/utils/utils"
@@ -13,8 +13,9 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent?: ResolvingMetadata
 ): Promise<Metadata> {
+  const collectionApi = new CollectionAPI()
   const address = params.address
-  const data = await getCollection(address);
+  const data = await collectionApi.getCollection(address);
  
   return {
     title: `LL NFT | ${data?.name || formatAccountDisplay(address)}`,

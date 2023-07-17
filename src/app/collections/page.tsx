@@ -2,7 +2,6 @@
 import CollectionsTable from "@/components/collections-table";
 import Search from "@/components/search";
 import { SelectFilter } from "@/components/select-filter";
-import { searchCollections } from "@/lib/api";
 import { CollectionGrid } from "@/modules";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";

@@ -7,7 +7,7 @@ import Link from "next/link"
 import { formatAccountDisplay } from "@/utils/utils"
 import useSWR from "swr"
 import fetcher from "@/lib/fetcher"
-import { getCollection } from "@/lib/api"
+import CollectionAPI from "@/lib/api/CollectionApi";
 import { Collection } from "@/interfaces/ICollection"
 
 interface CollectionProps {
@@ -15,9 +15,10 @@ interface CollectionProps {
 }
 
 const Collection = ({ address }: CollectionProps) => {
+    const collectionApi = new CollectionAPI()
     const [collection, setCollection] = useState<Collection>()
     const getDataCollection = async () => {
-        const data = await getCollection(address);
+        const data = await collectionApi.getCollection(address);
         setCollection(data);
     };
 

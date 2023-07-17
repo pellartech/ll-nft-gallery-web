@@ -3,7 +3,8 @@ import { NFTsCard } from "@/components/nfts-card";
 import Search from "@/components/search";
 import { SelectFilter } from "@/components/select-filter";
 import { useEffect, useState } from "react";
-import { getCollection, searchNfts } from "@/lib/api";
+import CollectionApi from "@/lib/api/CollectionApi"
+import NftApi from "@/lib/api/NftApi"
 import ReactPaginate from "react-paginate";
 import { CollectionFilter } from "./components";
 
@@ -19,6 +20,8 @@ const NftGrid = ({
     params: { address: string };
     searchParams: { q: string };
 }) => {
+    const collectionApi = new CollectionApi()
+    const nftApi = new NftApi()
     const search = searchParams.q ?? "";
     const contract_address = params.address;
     const [filterOpen, setFilterOpen] = useState(false)
@@ -43,12 +46,12 @@ const NftGrid = ({
     }, [filter]);
 
     const getDataNfts = async () => {
-        const data = await searchNfts(filter);
+        const data = await nftApi.searchNfts(filter);
         setNftsData(data);
     };
 
     const getDataCollection = async () => {
-        const data = await getCollection(contract_address);
+        const data = await collectionApi.getCollection(contract_address);
         setCollection(data);
     };
 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import { updateCollection } from '@/lib/api'
+import CollectionAPI from "@/lib/api/CollectionApi";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
@@ -22,6 +22,7 @@ type FormData = {
 }
 
 export default function CollectionForm({ collection }: { collection?: any }) {
+    const collectionApi = new CollectionAPI()
     const router = useRouter()
     const [logo, setLogo] = useState(null)
     const [background, setBackground] = useState(null)
@@ -50,7 +51,7 @@ export default function CollectionForm({ collection }: { collection?: any }) {
 
     const onSubmit = async (formData: any) => {
         setIsPending(true)
-        const result = await updateCollection(
+        const result = await collectionApi.updateCollection(
             collection?.contract_address!,
             formData?.name!,
             formData?.description!,

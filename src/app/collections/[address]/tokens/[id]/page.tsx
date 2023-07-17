@@ -1,6 +1,6 @@
 "use client";
 import { NFTCard } from "@/components/nft-card";
-import { refreshNftMetaData } from "@/lib/api";
+import NftApi from "@/lib/api/NftApi"
 import { Suspense } from "react";
 import { Card, Metric, Text, Title } from "@tremor/react";
 import { SendNFT } from "@/components/send-nft";
@@ -19,6 +19,7 @@ export default function Page({
 }: {
   params: { address: string; id: string };
 }) {
+  const nftApi = new NftApi()
   const contract_address = params.address;
   const id = params.id;
 
@@ -41,7 +42,7 @@ export default function Page({
 
   const handleRefreshNftMetaData = async () => {
     setInProgress(true);
-    await refreshNftMetaData(contract_address, id);
+    await nftApi.refreshNftMetaData(contract_address, id);
     setInProgress(false);
   };
 

@@ -2,7 +2,7 @@
 import CollectionsTable from "@/components/collections-table";
 import Search from "@/components/search";
 import { SelectFilter } from "@/components/select-filter";
-import { searchCollections } from "@/lib/api";
+import CollectionAPI from "@/lib/api/CollectionApi";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { CollectionFilter } from "./components";
@@ -29,6 +29,7 @@ const CollectionGrid = ({
     params: { address: string };
     searchParams: { q: string };
 }) => {
+    const collectionApi = new CollectionAPI()
     const search = searchParams.q ?? "";
     const [filterOpen, setFilterOpen] = useState(false)
     const [collectionsData, setCollectionsData] = useState<any>();
@@ -52,7 +53,7 @@ const CollectionGrid = ({
     }, [filter]);
 
     const getDataCollections = async () => {
-        const data = await searchCollections(filter);
+        const data = await collectionApi.searchCollections(filter);
         setCollectionsData(data);
     };
 
