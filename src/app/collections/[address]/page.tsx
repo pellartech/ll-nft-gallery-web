@@ -1,6 +1,6 @@
 import CollectionAPI from "@/lib/api/CollectionApi";
-import { Profile } from "@/modules"
-import Collection from "@/modules/Collection"
+import { Profile } from "@/ui/modules"
+import Collection from "@/ui/modules/Collection"
 import { formatAccountDisplay } from "@/utils/utils"
 import { Metadata, ResolvingMetadata } from 'next'
  

@@ -1,4 +1,4 @@
-import { Profile } from "@/modules"
+import { Profile } from "@/ui/modules"
 import { formatAccountDisplay } from "@/utils/utils"
 import { Metadata, ResolvingMetadata } from 'next'
  

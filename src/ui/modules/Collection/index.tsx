@@ -1,5 +1,5 @@
 "use client"
-import { PageHeader, CollectionGrid, NftGrid } from "@/modules"
+import { PageHeader, CollectionGrid, NftGrid } from "@/ui/modules"
 import ExpandableText from "@/ui/components/expandable-text"
 import { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
