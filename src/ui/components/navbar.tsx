@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { ConnectButton } from "@/components/chain/ConnectButton";
+import { ConnectButton } from "@/ui/components/chain/ConnectButton";
 import Link from "next/link";
 import { size } from "lodash";
 import Image from "next/image";

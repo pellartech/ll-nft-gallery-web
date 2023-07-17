@@ -1,5 +1,5 @@
 "use client";
-import ProfileForm from "@/components/profile-form";
+import ProfileForm from "@/ui/components/profile-form";
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher";
 import { useAccount } from "wagmi";

@@ -1,7 +1,7 @@
 "use client";
-import { NFTsCard } from "@/components/nfts-card";
-import Search from "@/components/search";
-import { SelectFilter } from "@/components/select-filter";
+import { NFTsCard } from "@/ui/components/nfts-card";
+import Search from "@/ui/components/search";
+import { SelectFilter } from "@/ui/components/select-filter";
 import { useEffect, useState } from "react";
 import CollectionApi from "@/lib/api/CollectionApi"
 import NftApi from "@/lib/api/NftApi"

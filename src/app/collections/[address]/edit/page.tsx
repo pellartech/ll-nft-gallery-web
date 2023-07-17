@@ -2,7 +2,7 @@
 import useSWR from "swr"
 import fetcher from '@/lib/fetcher'
 import React, { useState, useEffect } from 'react'
-import CollectionForm from '@/components/collection-form'
+import CollectionForm from '@/ui/components/collection-form'
 
 
 export default function Page({ params }: { params: { address: string } }) {

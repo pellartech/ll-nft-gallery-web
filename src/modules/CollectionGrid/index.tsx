@@ -1,7 +1,7 @@
 "use client"
-import CollectionsTable from "@/components/collections-table";
-import Search from "@/components/search";
-import { SelectFilter } from "@/components/select-filter";
+import CollectionsTable from "@/ui/components/collections-table";
+import Search from "@/ui/components/search";
+import { SelectFilter } from "@/ui/components/select-filter";
 import CollectionAPI from "@/lib/api/CollectionApi";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";

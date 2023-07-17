@@ -1,6 +1,6 @@
 "use client"
 import { PageHeader, CollectionGrid, NftGrid } from "@/modules"
-import ExpandableText from "@/components/expandable-text"
+import ExpandableText from "@/ui/components/expandable-text"
 import { useMemo, useState } from "react"
 import { useAccount } from "wagmi"
 import Link from "next/link"

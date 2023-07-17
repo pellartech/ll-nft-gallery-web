@@ -1,6 +1,6 @@
 "use client";
-import CollectionsTable from "@/components/collections-table";
-import { NFTsCard } from "@/components/nfts-card";
+import CollectionsTable from "@/ui/components/collections-table";
+import { NFTsCard } from "@/ui/components/nfts-card";
 import { Card, Title, Text } from "@tremor/react";
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher";

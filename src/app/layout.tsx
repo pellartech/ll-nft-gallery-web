@@ -1,6 +1,6 @@
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import Navbar from "@/components/navbar";
+import Navbar from "@/ui/components/navbar";
 import { Providers } from "./providers";
 
 export const metadata = {
