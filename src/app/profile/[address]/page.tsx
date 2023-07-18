@@ -1,4 +1,5 @@
-import { Profile } from "@/ui/modules"
+import UserAPI from "@/lib/api/UserApi"
+import Profile from "@/ui/pages/Profile"
 import { formatAccountDisplay } from "@/utils/utils"
 import { Metadata, ResolvingMetadata } from 'next'
  
@@ -11,13 +12,11 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent?: ResolvingMetadata
 ): Promise<Metadata> {
+  const userApi = new UserAPI()
   const address = params.address
-  const fetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/users/${address}`
-  const res = await fetch(fetchURL)
-  const data = await res.json()
- 
+  const res = await userApi.getProfile(address)
   return {
-    title: `LL NFT | ${data?.user?.name || formatAccountDisplay(address)}`,
+    title: `LL NFT | ${res?.user?.name || formatAccountDisplay(address)}`,
   }
 }
 

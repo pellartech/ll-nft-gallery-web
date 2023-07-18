@@ -1,6 +1,5 @@
 import CollectionAPI from "@/lib/api/CollectionApi";
-import { Profile } from "@/ui/modules"
-import Collection from "@/ui/modules/Collection"
+import { CollectionPage } from "@/ui/pages";
 import { formatAccountDisplay } from "@/utils/utils"
 import { Metadata, ResolvingMetadata } from 'next'
  
@@ -18,7 +17,7 @@ export async function generateMetadata(
   const data = await collectionApi.getCollection(address);
  
   return {
-    title: `LL NFT | ${data?.name || formatAccountDisplay(address)}`,
+    title: `LL NFT | ${data?.name}`,
   }
 }
 
@@ -26,7 +25,7 @@ export default async function Page({ params }: { params: { address: string } }) 
   return (
     <>
       <main className="p-4 md:p-10 mx-auto max-w-7xl">
-        <Collection address={params.address} />
+        <CollectionPage address={params.address} />
       </main>
     </>
   )

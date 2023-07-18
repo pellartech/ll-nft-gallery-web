@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react'
-import { fetchNftsByCollection } from "@/lib/api"
 import { useRouter } from 'next/navigation'
+import NftAPI from '@/lib/api/NftApi'
 
 export default function Page() {
+    const nftApi = new NftAPI()
     const router = useRouter()
     const [collection, setCollectionAddress] = useState("")
     const [fetchedForCollection, setFetchedForCollection] = useState(false)
@@ -12,7 +13,7 @@ export default function Page() {
     const fetchNFTsForCollection = async () => {
         if (collection.length) {
             setInProgress(true)
-            const result = await fetchNftsByCollection(collection)
+            const result = await nftApi.fetchNftsByCollection(collection)
             if (result && result.success) {
                 console.log("fetched:", result.success)
                 setFetchedForCollection(true)
