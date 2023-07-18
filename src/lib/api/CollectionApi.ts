@@ -1,3 +1,4 @@
+import { Collection } from '@/interfaces/ICollection';
 import BaseAPI from './BaseApi';
 
 class CollectionAPI extends BaseAPI {
@@ -6,7 +7,7 @@ class CollectionAPI extends BaseAPI {
         return this.get(path);
     }
 
-    async getCollection(address: string) {
+    async getCollection(address: string): Promise<Collection> {
         let path = `/api/v1/collections/${address}`;
         return this.get(path);
     }

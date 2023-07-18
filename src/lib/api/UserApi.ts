@@ -1,3 +1,4 @@
+import { IUser } from '@/interfaces/IUser';
 import BaseAPI from './BaseApi';
 import { SiweMessage } from 'siwe';
 
@@ -18,17 +19,14 @@ class UserAPI extends BaseAPI {
         return this.post('/api/v1/auth/logout');
     }
 
-    async getProfile(token: any) {
-        const path = `/api/v1/auth/profile?token=${encodeURIComponent(token)}`;
+    async getProfile(address: string) {
+        const path = `/api/v1/users/${address}`;
         return this.get(path);
     }
 
-    async updateProfile(token: any, name?: string, bio?: string, twitter?: string, instagram?: string, discord?: string) {
-        const path = `/api/v1/auth/profile?token=${encodeURIComponent(token)}`;
-        const payload = {
-            name, bio, twitter, instagram, discord, wallet_address: '0xde62C75255e6cd1EC7C5dAAFDEF1aC1ABaae1848'
-        };
-        return this.put(path, payload);
+    async updateProfile(user: IUser) {
+        const path = `/api/v1/auth/profile?`;
+        return this.put(path, user);
     }
 
     async updateProfileAvatar(token: any, imageData: File) {
