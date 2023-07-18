@@ -1,16 +1,16 @@
 "use client";
-import { NFTCard } from "@/components/nft-card";
-import { refreshNftMetaData } from "@/lib/api";
+import { NFTCard } from "@/ui/components/nft-card";
+import NftApi from "@/lib/api/NftApi"
 import { Suspense } from "react";
 import { Card, Metric, Text, Title } from "@tremor/react";
-import { SendNFT } from "@/components/send-nft";
+import { SendNFT } from "@/ui/components/send-nft";
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import Link from "next/link";
 import { formartTime, formatAccountDisplay, getImage } from "@/utils/utils";
-import { Back } from "@/components/back";
+import { Back } from "@/ui/components/back";
 import { isEmpty, map, size } from "lodash";
 import Image from "next/image";
 
@@ -19,6 +19,7 @@ export default function Page({
 }: {
   params: { address: string; id: string };
 }) {
+  const nftApi = new NftApi()
   const contract_address = params.address;
   const id = params.id;
 
@@ -41,7 +42,7 @@ export default function Page({
 
   const handleRefreshNftMetaData = async () => {
     setInProgress(true);
-    await refreshNftMetaData(contract_address, id);
+    await nftApi.refreshNftMetaData(contract_address, id);
     setInProgress(false);
   };
 

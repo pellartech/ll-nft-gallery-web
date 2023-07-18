@@ -10,15 +10,16 @@ import {
 
 import { chains, config } from '@/lib/wagmi'
 import { useEffect, useState } from "react"
-import { getAuthNonce, signin, logout } from '@/lib/api'
+import UserApi from "@/lib/api/UserApi";
 import { SiweMessage } from 'siwe'
 
 export function Providers({ children }: { children: React.ReactNode }) {
+    const userApi = new UserApi()
     const [authenticationStatus, setAuthenticationStatus] = useState<"loading" | "unauthenticated" | "authenticated">("loading")
 
     const authenticationAdapter = createAuthenticationAdapter({
         getNonce: async () => {
-            const data = await getAuthNonce();
+            const data = await userApi.getAuthNonce();
             return data.nonce
         },
         createMessage: ({ nonce, address, chainId }) => {
@@ -36,7 +37,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             return message.prepareMessage();
         },
         verify: async ({ message, signature }) => {
-            const data = await signin(message, signature)
+            const data = await userApi.signin(message, signature)
             if (data.token) {
                 window.localStorage.setItem('lightlink-web-token', data.token)
                 setAuthenticationStatus("authenticated")

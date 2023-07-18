@@ -1,28 +1,29 @@
-'use client'
-import useSWR from "swr"
-import fetcher from '@/lib/fetcher'
-import React, { useState, useEffect } from 'react'
-import CollectionForm from '@/components/collection-form'
+import React from 'react'
+import CollectionEdit from "@/ui/pages/CollectionEdit"
+import { Metadata, ResolvingMetadata } from 'next'
+import CollectionAPI from '@/lib/api/CollectionApi'
+ 
+type Props = {
+  params: { address: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
+export async function generateMetadata(
+    { params, searchParams }: Props,
+    parent?: ResolvingMetadata
+): Promise<Metadata> {
+    const collectionApi = new CollectionAPI()
+    const address = params.address
+    const collection = await collectionApi.getCollection(address)
+    return {
+        title: `LL NFT | Edit Collection | ${collection.name}`,
+    }
+}
 
 export default function Page({ params }: { params: { address: string } }) {
-    const address = params.address
-    const fetchURL = `${process.env.NEXT_PUBLIC_API_URL_ROOT}/api/v1/collections/${address}`
-    const { data, error } = useSWR(fetchURL, fetcher)
-
-
-    if (!data) {
-        return (
-            <main className="p-4 md:p-10 mx-auto max-w-7xl">
-                <div>loading...
-                </div>
-            </main>
-        )
-    }
-
     return (
         <main className="p-4 md:p-10 mx-auto max-w-7xl">
-            <CollectionForm collection={data} />
+            <CollectionEdit address={params.address} />
         </main>
     )
 }

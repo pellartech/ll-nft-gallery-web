@@ -6,7 +6,7 @@ export const CollectionCard = ({ item }: { item: Collection }) => {
   return (
     <div
       key={item.key}
-      className="w-[calc(50%-10px)] sm:w-[calc(33%-13px)] lg:w-[calc(20%-16px)] flex flex-col bg-dark-90 border border-[#313131] rounded-xl"
+      className="w-full flex flex-col bg-dark-90 border border-[#313131] rounded-xl"
     >
       <Link
         key={item.key}
