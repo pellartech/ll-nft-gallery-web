@@ -33,8 +33,7 @@ export default function ProfileForm({ user }: { user?: IUser }) {
 
     const onSubmit = async (data: IUser) => {
         setLoading(true)
-        const token = window.localStorage.getItem("lightlink-web-token")
-        const result = await userApi.updateProfile(token, data.name, data.bio, data.twitter, data.instagram, data.discord)
+        const result = await userApi.updateProfile(data)
         if (result) {
             router.push(`/profile/${user?.wallet_address}`)
         } else {

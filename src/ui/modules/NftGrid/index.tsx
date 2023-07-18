@@ -46,7 +46,7 @@ const NftGrid = ({
     }, [filter]);
 
     const getDataNfts = async () => {
-        const data = await nftApi.searchNfts(filter);
+        const data = await nftApi.queryNfts(contract_address);
         setNftsData(data);
     };
 
