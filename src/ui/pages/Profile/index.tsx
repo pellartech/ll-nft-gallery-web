@@ -19,8 +19,6 @@ const Profile = ({ address }: ProfileProps) => {
     const { data } = useSWR(fetchURL, fetcher)
 
     const thumbImageUrl = useMemo(() => {
-        console.log('connected: ', connectedAddress?.toLowerCase())
-        console.log('user: ', address.toLowerCase())
         if (data?.user?.avatar?.original) {
             return getImage(data?.user?.avatar?.original)
         }
