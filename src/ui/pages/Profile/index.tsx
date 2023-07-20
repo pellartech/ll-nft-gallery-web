@@ -19,6 +19,8 @@ const Profile = ({ address }: ProfileProps) => {
     const { data } = useSWR(fetchURL, fetcher)
 
     const thumbImageUrl = useMemo(() => {
+        console.log('connected: ', connectedAddress?.toLowerCase())
+        console.log('user: ', address.toLowerCase())
         if (data?.user?.avatar?.original) {
             return getImage(data?.user?.avatar?.original)
         }
@@ -31,7 +33,7 @@ const Profile = ({ address }: ProfileProps) => {
             <div className="text-4xl text-white font-semibold mb-4 mt-80 flex justify-start gap-2 items-center">
                 {data?.user?.name || formatAccountDisplay(address)}
 
-                {connectedAddress?.toLocaleLowerCase() === address.toLowerCase() &&
+                {connectedAddress?.toLowerCase() === address.toLowerCase() &&
                     <Link href="/profile/edit">
                         <img className=" h-7" src="/images/icons/edit.svg" alt="" />
                     </Link>
